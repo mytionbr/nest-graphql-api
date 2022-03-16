@@ -9,8 +9,10 @@ export class User {
   id: string;
 
   @Column()
+  @Field()
   email: string;
 
   @Column()
+  @Field()
   name: string;
 }
