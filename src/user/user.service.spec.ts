@@ -17,7 +17,7 @@ describe('UserService', () => {
     delete: jest.fn(),
   };
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UserService,
@@ -29,6 +29,15 @@ describe('UserService', () => {
     }).compile();
 
     service = module.get<UserService>(UserService);
+  });
+
+  beforeEach(async () => {
+    mockRepository.save.mockReset();
+    mockRepository.create.mockReset();
+    mockRepository.find.mockReset();
+    mockRepository.findOne.mockReset();
+    mockRepository.delete.mockReset();
+    mockRepository.update.mockReset();
   });
 
   it('should be defined', () => {
@@ -54,7 +63,7 @@ describe('UserService', () => {
       expect(mockRepository.findOne).toHaveBeenCalledTimes(1);
     });
     it('should return a exception when does not to find a user', async () => {
-      mockRepository.findOne.mockRejectedValue(null);
+      mockRepository.findOne.mockReturnValue(null);
       expect(service.findUserById('1')).rejects.toBeInstanceOf(
         NotFoundException,
       );
