@@ -14,4 +14,9 @@ export class UpdateUserInput {
   @IsOptional()
   @Field()
   email?: string;
+
+  @IsString()
+  @IsOptional()
+  @Field()
+  password?: string;
 }

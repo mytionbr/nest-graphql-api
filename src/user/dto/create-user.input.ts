@@ -12,4 +12,9 @@ export class CreateUserInput {
   @IsNotEmpty({ message: 'Esse campo não pode ficar em branco' })
   @Field()
   email: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'Esse campo não pode ficar em branco' })
+  @Field()
+  password?: string;
 }

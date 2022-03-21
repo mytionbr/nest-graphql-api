@@ -5,7 +5,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 
-@Resolver()
+@Resolver('User')
 export class UserResolver {
   constructor(private userService: UserService) {}
 
@@ -19,9 +19,12 @@ export class UserResolver {
   async user(@Args('id') id: string): Promise<User> {
     const user = await this.userService.findUserById(id);
 
-    if (!user) {
-      throw new NotFoundException('Usuário não encontrado');
-    }
+    return user;
+  }
+
+  @Query(() => User)
+  async userByEmail(@Args('id') email: string): Promise<User> {
+    const user = await this.userService.findUserByEmail(email);
 
     return user;
   }
