@@ -1,5 +1,6 @@
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { GqlAuthGuard } from 'src/auth/auth.guard';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './user.entity';
@@ -15,6 +16,7 @@ export class UserResolver {
     return users;
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => User)
   async user(@Args('id') id: string): Promise<User> {
     const user = await this.userService.findUserById(id);
@@ -23,7 +25,7 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  async userByEmail(@Args('id') email: string): Promise<User> {
+  async userByEmail(@Args('email') email: string): Promise<User> {
     const user = await this.userService.findUserByEmail(email);
 
     return user;

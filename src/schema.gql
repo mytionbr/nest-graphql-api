@@ -16,7 +16,7 @@ type AuthType {
 type Query {
   users: [User!]!
   user(id: String!): User!
-  userByEmail(id: String!): User!
+  userByEmail(email: String!): User!
 }
 
 type Mutation {
